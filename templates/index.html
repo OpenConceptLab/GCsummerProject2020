@@ -10,12 +10,30 @@
 </head>
 
 <body>
-   
-    <form class="" action="data" method="post">
-        <input type="file" name="csvfile" value="">
-        <input type="submit" name="" value="Submit File">
-    </form>
-    <p> Test </p>
+   <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <h1>Upload CSV or JSON File</h1>
+
+                <form class="" action="data" method="POST" enctype="multipart/form-data ">
+
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <label class="custom-file-label" for="csvfile">Select File...</label>
+                            <input type="file" class="custom-file-input" name="csvfile" id="csvfile" value="">
+                            
+                            <input type="submit" name="" value="Submit File"> <br>
+                            <button type="submit" class="btn btn-primary">Upload File</button>
+                        </div>
+                    </div>
+                
+                </form>
+
+                <p> Test </p>
+            </div>
+        </div>
+    </div>
     
 
 </body>
