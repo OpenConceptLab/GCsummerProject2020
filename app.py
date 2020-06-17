@@ -24,7 +24,7 @@ def data():
         data = pd.DataFrame(data)
         return render_template('data.html', data=data.to_html())
 
-app.config['FILE_UPLOADS'] = "/Users/gerardcarthy/Desktop/summerProjectCode/gcSummerProject/static/fileUploads"
+app.config["FILE_UPLOADS"] = "/Users/gerardcarthy/Desktop/summerProjectCode/gcSummerProject/static/fileUploads"
 app.config["ALLOWED_FILE_EXTENSIONS"] = ["CSV","JSON"]
 
 def allowed_files(filename):
@@ -39,8 +39,9 @@ def allowed_files(filename):
     else:
         return False
 
-@app.route("/upload_file", methods =["GET","POST"])
+@app.route("/upload-file", methods =["GET","POST"])
 def upload_file():
+    
     if request.method == "POST":
 
         if request.files:
@@ -48,22 +49,23 @@ def upload_file():
             oclfile = request.files["csvfile"]
 
             if oclfile.filename == "":
-                print("image must have a filename")
+                print("Upload must have a filename")
                 return redirect(request.url)
             
-            if not allowed_files(ocl.filename):
+            if not allowed_files(oclfile.filename):
                 print("This file extension is not allowed, please use csv or json file")
                 return redirect(request.url)
             
-            else: filename = secure_filename(oclfile.filename)
+            else: 
+                filename = secure_filename(oclfile.filename)
 
-            oclfile.save(os.path.join(app.config['FILE_UPLOADS'], ocl.filename))
+                oclfile.save(os.path.join(app.config["FILE_UPLOADS"], oclfile.filename))
 
             print("File Saved")
 
-            return redirct(request.url)
+        return redirect(request.url)
     
-    return render_template('index.html')
+    return render_template("loader.html")
 
             
 
