@@ -45,9 +45,9 @@ def upload_file():
     if request.method == "POST":
 
         if request.files:
-
+            
             oclfile = request.files["csvfile"]
-
+            
             if oclfile.filename == "":
                 print("Upload must have a filename")
                 return redirect(request.url)
