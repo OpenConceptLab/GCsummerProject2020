@@ -39,7 +39,7 @@ def allowed_files(filename):
     else:
         return False
 
-@app.route("/upload-file", methods =["GET","POST"])
+@app.route("/loader", methods =["GET","POST"])
 def upload_file():
     
     if request.method == "POST":
