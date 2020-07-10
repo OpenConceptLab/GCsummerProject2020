@@ -5,6 +5,7 @@ import pandas as pd
 import csv
 import json
 import os
+import requests
 
 
 app = Flask(__name__)
@@ -46,7 +47,7 @@ def allowed_files(filename):
 
 @app.route("/loader", methods =["GET","POST"])
 def upload_file():
-    flash("working")
+    
     if request.method == "POST":
         print(request.files)
         oclfile = request.files["file"]
@@ -56,7 +57,7 @@ def upload_file():
             return redirect(request.url)
         
         if not allowed_files(oclfile.filename):
-            flash("This file extension is not allowed, please use csv or json file")
+            flash("This file extension is not allowed, please use csv or json file", "error")
             return redirect(request.url)
         
         else: 
@@ -64,6 +65,7 @@ def upload_file():
             oclfile.save(os.path.join(app.config["FILE_UPLOADS"], oclfile.filename))
 
         flash("File Saved")
+        flash("Ready for new upload")
 
         return redirect(request.url)
     
