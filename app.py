@@ -21,6 +21,7 @@ def index():
 
 @app.route('/data', methods= ['GET', 'POST'])
 def data():
+    #validates file as csv or json file
     if request.method == 'POST':
         f = request.form['csvfile']
         data = []
@@ -50,6 +51,7 @@ def allowed_files(filename):
 
 @app.route("/loader", methods =["GET","POST"])
 def upload_file():
+    #Uploads file to folder locally
     
     if request.method == "POST":
         print(request.files)
@@ -73,6 +75,16 @@ def upload_file():
         return redirect(request.url)
     
     return render_template("loader.html")
+
+class Command(BaseCommand):
+    #Imports an import file 
+    help = 'Import an OCL_formatted import file'
+    option_list = BaseCommand.option_list + (
+        make_option()
+    )
+
+
+
 
 
 
