@@ -5,14 +5,19 @@ import pandas as pd
 import csv
 import json
 import os
-import requests
-from omrs.management.commands import OclOpenmrsHelper
-import ocldev.oclvalidator
-import ocldev.oclfleximporter
-from optparse import make_option
+#import requests
+#import ocldev.oclvalidator
+#import ocldev.oclfleximporter
+#from optparse import make_option
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = ""
+
+#tasks = [
+    #{
+    #    'id': 1,
+    #    'authorization'
+    #},
 
 
 @app.route('/', methods= ['GET', 'POST'])
@@ -34,7 +39,8 @@ def data():
 
 #fileUploads= "/Users/gerardcarthy/Desktop/summerProjectCode/gcSummerProject/static/fileUploads"
 
-app.config["FILE_UPLOADS"] = "/Users/gerardcarthy/Desktop/summerProjectCode/gcSummerProject/static/fileUploads"
+#app.config["FILE_UPLOADS"] = "/Users/gerardcarthy/Desktop/summerProjectCode/gcSummerProject/static/fileUploads"
+app.config["FILE_UPLOADS"] = "https://api.staging.openconceptlab.org/manage/bulkimport/?task=dc4ef66f-449c-44de-9b83-c1e4a078c9eb-datim-admin&result=summary"
 app.config["ALLOWED_FILE_EXTENSIONS"] = ["CSV","JSON"]
 app.config['SECRET_KEY'] = '1234556'
 
@@ -75,19 +81,6 @@ def upload_file():
         return redirect(request.url)
     
     return render_template("loader.html")
-
-class Command(BaseCommand):
-    #Imports an import file 
-    help = 'Import an OCL_formatted import file'
-    option_list = BaseCommand.option_list + (
-        make_option()
-    )
-
-
-
-
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
