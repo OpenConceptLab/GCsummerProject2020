@@ -98,7 +98,7 @@ headers= {}
 response = requests.request("GET", url, headers=headers, data = payload)
 print(response.text.encode('utf8'))
 """
-
+app.config["FILE_UPLOADS"] = "api.staging.openconceptlab.org/manage/bulkimport"
 @app.route("/api.staging.openconceptlab.org/manage/bulkimport", methods= ["GET","POST"])
 def post():
     if request.method == "POST":

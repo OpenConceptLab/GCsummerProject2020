@@ -46,7 +46,9 @@
                     
                 
                 </form>
-                <button id="status" name="status"> Get Status</button>
+                <form action="https://api.staging.openconceptlab.org/manage/bulkimport?task=dc4ef66f-449c-44de-9b83-c1e4a078c9eb-datim-admin&result=summary" method="GET" enctype="multipart/form-data">
+                    <button id="status" name="status"> Get Status</button>
+                </form>
                 <div id="loading" style="display:none;">
                     <img class="col-sm-3 col-sm-offset-4" src="{{ url_for('static',filename='images/spinner.gif') }}" ng-show="loading">
                 </div>
