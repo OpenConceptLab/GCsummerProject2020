@@ -97,9 +97,12 @@ payload = {}
 headers= {}
 response = requests.request("GET", url, headers=headers, data = payload)
 print(response.text.encode('utf8'))
+QA Token a28072a2eb82c6c9949ba6bb8489002438e5bcc7
+
+
 """
-app.config["FILE_UPLOADS"] = "api.staging.openconceptlab.org/manage/bulkimport"
-@app.route("/api.staging.openconceptlab.org/manage/bulkimport", methods= ["GET","POST"])
+app.config["FILE_UPLOADS"] = "api.qa.openconceptlab.org/manage/bulkimport"
+@app.route("/api.qa.openconceptlab.org/manage/bulkimport", methods= ["GET","POST"])
 def post():
     if request.method == "POST":
         print(request.files)
