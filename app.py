@@ -5,6 +5,7 @@ import pandas as pd
 import csv
 import json
 import os
+import requests
 
 
 
@@ -51,7 +52,6 @@ def allowed_files(filename):
 @app.route("/loader", methods =["GET","POST"])
 def upload_file():
     #Uploads file to folder locally
-    
     if request.method == "POST":
         print(request.files)
         oclfile = request.files["file"]
@@ -82,34 +82,26 @@ def upload_file():
     "state": "STARTED",
     "task": "dc4ef66f-449c-44de-9b83-c1e4a078c9eb-datim-admin"
 }
-
 Import Completed
-
 Processed 28 of 28 -- 28 NEW (200:4, 201:24)
-
 Exception Raised
-
 {
     "exception": "task dc4ef66f-449c-44de-9b83-c1e4a078c9eb-datim-admi not found"
 }
-
 payload = {}
 headers= {}
 response = requests.request("GET", url, headers=headers, data = payload)
 print(response.text.encode('utf8'))
 QA Token a28072a2eb82c6c9949ba6bb8489002438e5bcc7
-
-
 """
-app.config["FILE_UPLOADS"] = "api.qa.openconceptlab.org/manage/bulkimport"
-@app.route("/api.qa.openconceptlab.org/manage/bulkimport", methods= ["GET","POST"])
-def post():
-    url: "https://api.qa.openconceptlab.org/manage/bulkimport/?task=ff5ce807-9833-4c7b-aa64-f89bc5a9a368-pritam-default&result=summary"
-    oclfile = request.files["file"]
-    payload = {oclfile}
+
+app.config["FILE_UPLOADS"] = "/Users/gerardcarthy/Desktop/summerProjectCode/gcSummerProject/static/fileUploads"
+@app.route("/upload", methods= ["GET","POST"])
+def upload():
     if request.method == "POST":
         print(request.files)
         oclfile = request.files["file"]
+        content = request.files['file'].read()
             
         if oclfile.filename == "":
             flash("Upload must have a filename")
@@ -119,16 +111,23 @@ def post():
             flash("This file extension is not allowed, please use csv or json file", "error")
             return redirect(request.url)
         
-        else: 
+        else:
+            url = 'https://api.qa.openconceptlab.org/manage/bulkimport/'
             filename = secure_filename(oclfile.filename)
-            oclfile.save(os.path.join(app.config["FILE_UPLOADS"], oclfile.filename))
+            #oclfile.post(url, data=json.dumps(payload))
+            print(content)
+            with open(os.path.join(app.config["FILE_UPLOADS"], filename), "wb") as fp:
+                #fp.write(content)
+                headers = {'Content-type': 'text/html; charset=UTF-8', "Authorization": "Token hZrdvmAT7FvHXSLUqcz2WAH4GTm5sj"}
+                requests.post(url, files={filename:content})
 
-        flash("File Saved")
+
+        flash("Processed")
         flash("Ready for new upload")
 
         return redirect(request.url)
     
-    return render_template("base.html")
+    return render_template("upload.html")
     
 
 if __name__ == "__main__":

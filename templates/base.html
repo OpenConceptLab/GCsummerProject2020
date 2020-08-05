@@ -31,13 +31,12 @@
 
                 <h1>Upload CSV or JSON File</h1>
 
-                <form class="" action="https://api.qa.openconceptlab.org/manage/bulkimport?task=dc4ef66f-449c-44de-9b83-c1e4a078c9eb-datim-admin&result=summary" method="POST" enctype="multipart/form-data">
+                <form class="" action="/base" method="POST" enctype="multipart/form-data">
                     <p> Upload a CSV or JSON File to the OCL Library </p><br>
                     <div class="form-group">
                         <div class="custom-file">
                             <label class="custom-file-label" for="file">Select File...</label>
-                            <input type="file" class="custom-file-input" name="file" id="file" value="">
-                            
+                            <input type="file" class="custom-file-input" name="file" id="file" value="">   
                             <button type = "submit" class = "btn btn-primary" onclick="$('#loading').show();">Upload File</button>
                             
                         </div>
@@ -45,8 +44,9 @@
                 </form>
                 
                 <form>
-                    <button id="status" name="status"> Get Status</button>
+                    <button id="status" name="status">Get Status</button>
                 </form>
+
                 <div id="loading" style="display:none;">
                     <img class="col-sm-3 col-sm-offset-4" src="{{ url_for('static',filename='images/spinner.gif') }}" ng-show="loading">
                 </div>

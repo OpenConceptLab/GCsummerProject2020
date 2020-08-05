@@ -3,13 +3,69 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>
         CSV and JSON File Loader
     </title>
+    <script type="text/javascript">
+        $(function(){
+            $.ajax({
+                type: "GET",
+                beforeSend: function(request) {
+                request.setRequestHeader("Authorization", "Token hZrdvmAT7FvHXSLUqcz2WAH4GTm5sj");
+            },
+                url: "https://api.qa.openconceptlab.org/manage/bulkimport/?task=ff5ce807-9833-4c7b-aa64-f89bc5a9a368-pritam-default&result=summary",
+                success: function(msg) {
+                alert(msg);
+            }        
+        });
+        });
+    </script>
 
 </head>
 
 <body>
-  <p>Your file has successfully been loaded</p>
+   <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <h1>Upload CSV or JSON File</h1>
+
+                <form class="" action="/upload" method="POST" enctype="multipart/form-data">
+                    <p> Upload a CSV or JSON File to the OCL Library </p><br>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <label class="custom-file-label" for="file">Select File...</label>
+                            <input type="file" class="custom-file-input" name="file" id="file" value="">   
+                            <button type = "submit" class = "btn btn-primary" onclick="$('#loading').show();">Upload File</button>
+                            
+                        </div>
+                    </div>
+                </form>
+                
+                <form>
+                    <button id="status" name="status">Get Status</button>
+                </form>
+
+                <div id="loading" style="display:none;">
+                    <img class="col-sm-3 col-sm-offset-4" src="{{ url_for('static',filename='images/spinner.gif') }}" ng-show="loading">
+                </div>
+                    {% with messages = get_flashed_messages() %}
+                      {% if messages %}
+                        <ul class=flashes>
+                        {% for message in messages %}
+                          <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+
+
+                
+            </div>
+        </div>
+    </div>
+    
+
 </body>
-<html>
+</html>
