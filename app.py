@@ -104,6 +104,9 @@ QA Token a28072a2eb82c6c9949ba6bb8489002438e5bcc7
 app.config["FILE_UPLOADS"] = "api.qa.openconceptlab.org/manage/bulkimport"
 @app.route("/api.qa.openconceptlab.org/manage/bulkimport", methods= ["GET","POST"])
 def post():
+    url: "https://api.qa.openconceptlab.org/manage/bulkimport/?task=ff5ce807-9833-4c7b-aa64-f89bc5a9a368-pritam-default&result=summary"
+    oclfile = request.files["file"]
+    payload = {oclfile}
     if request.method == "POST":
         print(request.files)
         oclfile = request.files["file"]
