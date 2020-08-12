@@ -14,9 +14,25 @@
                 beforeSend: function(request) {
                 request.setRequestHeader("Authorization", "Token hZrdvmAT7FvHXSLUqcz2WAH4GTm5sj");
             },
-                url: "https://api.qa.openconceptlab.org/manage/bulkimport/?task=f8645dbd-295d-4cb9-879b-24e0c23a4f0c-pritam~default&result=summary",
+                url: "https://api.qa.openconceptlab.org/manage/bulkimport/?task=2324ad74-649c-4194-8d35-c8f2a75bbc3a-root~priority&result=summary",
                 success: function(msg, task) {
                     $("#changer").html("{ state: " + msg["state"] + " , task: "  + msg["task"] + " }");
+                    $("#stat").html(msg)
+            }        
+        });
+        });
+
+        $(function(){
+            $.ajax({
+                type: "POST",
+                beforeSend: function(request) {
+                request.setRequestHeader("Authorization", "Token hZrdvmAT7FvHXSLUqcz2WAH4GTm5sj");
+            },
+                url: "https://api.qa.openconceptlab.org/manage/bulkimport/",
+                success: function(msg, task) {
+                    $("#changer").html("{ state: " + msg["state"] + " , task: "  + msg["task"] + " }");
+                    
+
             }        
         });
         });
@@ -44,7 +60,7 @@
                 </form>
                 
                 <form action="/upload" method="GET" enctype="multipart/form-data">
-                    <button id="status" name="status" onclick="$('#changer').show();">Status Update</button>
+                    <button id="status" name="status" onclick="$('#changer').show();">Get Update</button>
                 </form>
 
                 <div id="loading" style="display:none;">
@@ -60,7 +76,8 @@
                       {% endif %}
                     {% endwith %}
 
-                <div id="changer">  msg </div>
+                <div id="changer">  Status: </div>
+                <div id="stat"> msg </div>
 
 
                 
