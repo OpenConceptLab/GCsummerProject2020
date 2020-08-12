@@ -3,8 +3,8 @@ html,body { height:100%; }
 html {
 	background-color: #EDEBEB;
 	border-top: solid 6em #990000;
-	font-size: l00%;
 }
+
 body {
 	width: 75%;
 	min-width: 360px;
