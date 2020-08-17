@@ -8,33 +8,48 @@
         CSV and JSON File Loader
     </title>
     <script type="text/javascript">
-        $(function(){
+        $(function (){
             $.ajax({
                 type: "GET",
                 beforeSend: function(request) {
                 request.setRequestHeader("Authorization", "Token hZrdvmAT7FvHXSLUqcz2WAH4GTm5sj");
             },
-                url: "https://api.qa.openconceptlab.org/manage/bulkimport/?task=2324ad74-649c-4194-8d35-c8f2a75bbc3a-root~priority&result=summary",
-                success: function(msg, task) {
-                    $("#changer").html("{ state: " + msg["state"] + " , task: "  + msg["task"] + " }");
-                    $("#stat").html(msg)
-            }        
+                url: "https://api.qa.openconceptlab.org/manage/bulkimport/?task=6b10dcb6-462e-478b-b210-ec5dc11a55e2-vinishad~default&result=summary",
+                success:function(result, status, xhr) {
+                alert(result)
+                var response = (xhr.getResponseHeader("content-type"))
+                    if (response.indexOf('text/html') > -1){
+                        $("#stat").html(result);
+                        $("#changer").hide()
+                    }
+                    else {
+                        $("#changer").html("{ state: " + result["state"] + " , task: "  + result["task"] + " }");
+                        }
+                        $("#stat").hide()   
+                    }
+                    
+            });
         });
-        });
+        
 
-        $(function(){
+        $("form#files").submit(function(){
+            var formData = new FormData($(file)[0]);
             $.ajax({
-                type: "POST",
+                url: "http://api.qa.openconceptlab.org/manage/bulkimport/",
+                type: 'POST',
+                data: formData,
+                async: false,
                 beforeSend: function(request) {
                 request.setRequestHeader("Authorization", "Token hZrdvmAT7FvHXSLUqcz2WAH4GTm5sj");
+                },
+                success: function (data) {
+                alert(data)
             },
-                url: "https://api.qa.openconceptlab.org/manage/bulkimport/",
-                success: function(msg, task) {
-                    $("#changer").html("{ state: " + msg["state"] + " , task: "  + msg["task"] + " }");
-                    
-
-            }        
-        });
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+            return false;
         });
     </script>
 
@@ -47,7 +62,7 @@
 
                 <h1>Upload CSV or JSON File</h1>
 
-                <form class="" action="/upload" method="POST" enctype="multipart/form-data">
+                <form id="files" action="/upload" method="POST" enctype="multipart/form-data">
                     <p> Upload a CSV or JSON File to the OCL Library </p><br>
                     <div class="form-group">
                         <div class="custom-file">
@@ -60,7 +75,7 @@
                 </form>
                 
                 <form action="/upload" method="GET" enctype="multipart/form-data">
-                    <button id="status" name="status" onclick="$('#changer').show();">Get Update</button>
+                    <button id="status" name="status">Get Update</button>
                 </form>
 
                 <div id="loading" style="display:none;">
@@ -76,7 +91,9 @@
                       {% endif %}
                     {% endwith %}
 
-                <div id="changer">  Status: </div>
+
+                <h3>Status Updates</h3>    
+                <div id="changer"> Status: </div>
                 <div id="stat"> msg </div>
 
 

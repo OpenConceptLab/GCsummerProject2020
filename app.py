@@ -65,7 +65,7 @@ def upload_file():
         
         else: 
             filename = secure_filename(oclfile.filename)
-            oclfile.save(os.path.join(app.config["FILE_UPLOADS"], oclfile.filename))
+            #oclfile.save(os.path.join(app.config["FILE_UPLOADS"], oclfile.filename))
 
         flash("File Saved")
         flash("Ready for new upload")
@@ -118,7 +118,7 @@ def upload():
             return redirect(request.url)
         
         else:
-            url = 'https://api.qa.openconceptlab.org/manage/bulkimport'
+            url = 'http://api.qa.openconceptlab.org/manage/bulkimport'
             filename = secure_filename(oclfile.filename)
             #oclfile.post(url, data=json.dumps(payload))
             #print(content)
