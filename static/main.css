@@ -63,3 +63,12 @@ aside {
 	font-size: .6em;
 	font-style: italic;
 }
+
+label {
+	cursor: pointer;
+  }
+  
+  textarea {
+	width: 400px;
+	height: 150px;
+  }
