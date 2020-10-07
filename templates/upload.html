@@ -48,64 +48,38 @@
           	var fileToUpload = $("#file")[0].files[0];
             var content = JSON.stringify(fileToUpload)
           	formData.append("file", content);
-            $.ajax({
-                url: "https://api.qa.openconceptlab.org/manage/bulkimport/",
-                type: 'POST',
-                data: formData,
-                async: true,
-                processData: false,
-                contentType: false,
-                beforeSend: function(request) {
-                	request.setRequestHeader("Authorization", "Token hZrdvmAT7FvHXSLUqcz2WAH4GTm5sj");     
-                },
-                
-                success: function (data) {
-                    console.log(JSON.stringify(content))
-                    console.log(formData)
-                    $("#stat").html(JSON.stringify(data));
-                    $("#changer").hide();
-                    $("#loading").empty();
-                    id = data.task;
-            	},
-              	error: function(xhr, status, error){
-                	console.log(status, error);
-                },
-            });
+            let reader = new FileReader();
+            reader.readAsText(fileToUpload);
+              reader.onload = function() {
+                  console.log(reader.result);
+                  $.ajax({
+                      url: "https://api.qa.openconceptlab.org/manage/bulkimport/",
+                      type: 'POST',
+                      data: reader.result,
+                      async: true,
+                      processData: false,
+                      contentType: false,
+                      beforeSend: function(request) {
+                          request.setRequestHeader("Authorization", "Token hZrdvmAT7FvHXSLUqcz2WAH4GTm5sj");
+                          },
+
+                      success: function (data) {
+                          $("#stat").html(JSON.stringify(data));
+                          $("#changer").hide();
+                          $("#loading").empty();
+                          id = data.task;
+                          },
+                      error: function(xhr, status, error){
+                          console.log(status, error);
+                          },
+                  });
+              };
+              reader.onerror = function() {
+                  console.log(reader.error);
+              };
             return false;
         });
-      
     });
-        const reader = new FileReader()
-        reader.onload = event => console.log(event.target.result) // desired file content
-        reader.onerror = error => reject(error)
-        reader.readAsText(file)
-        document.getElementById('file')
-        .addEventListener('change', getFile)
-
-        function getFile(event) {
-            const input = event.target
-        if ('files' in input && input.files.length > 0) {
-            placeFileContent(
-            document.getElementById('content-target'),
-            input.files[0])
-        }
-        }
-
-        function placeFileContent(target, file) {
-            readFileContent(file).then(content => {
-            target.value = content
-        }).catch(error => console.log(error))
-        }
-
-        function readFileContent(file) {
-            const reader = new FileReader()
-        return new Promise((resolve, reject) => {
-            reader.onload = event => resolve(event.target.result)
-            reader.onerror = error => reject(error)
-            reader.readAsText(file)
-        })
-        }
-
 
     /* $("form#files").submit(function(e){
           	e.preventDefault();
